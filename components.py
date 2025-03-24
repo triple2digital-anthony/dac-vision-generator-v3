@@ -5,10 +5,11 @@ UI components for the DataMatrix Code Generator application.
 import streamlit as st
 import pandas as pd
 import time
-from typing import List, Dict, Any
-from datamatrix_generator.generator.datamatrix import DataMatrixCodeGenerator
-from datamatrix_generator.utils.helpers import format_results
-from datamatrix_generator.utils.logger import AccessLogger
+from typing import List, Dict, Optional, Tuple
+
+from datamatrix import DataMatrixCodeGenerator
+from helpers import format_results
+from logger import AccessLogger
 
 def create_tab_ui(cap_type: str) -> None:
     """Create the UI for a specific cap type tab."""

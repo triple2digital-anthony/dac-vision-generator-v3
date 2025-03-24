@@ -5,8 +5,9 @@ Main entry point for the DataMatrix Code Generator application.
 import streamlit as st
 import pandas as pd
 from generator.datamatrix import DataMatrixCodeGenerator
-from ui.auth import check_password
-from ui.components import create_tab_ui, create_about_tab
+from components import create_tab_ui, create_about_tab, create_admin_view
+from auth import check_password
+from styles import apply_custom_styles
 from utils.logger import AccessLogger
 
 def create_admin_view():
