@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html class="h-full">
+<head>
+    <title>Advanced Code Generator (Blue, Black & Red Caps)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .code {
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s ease-in-out;
+        }
+        .code:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .tab {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab:hover {
+            transform: translateY(-2px);
+        }
+        .button {
+            transition: all 0.2s ease-in-out;
+        }
+        .button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .code {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .dark .tab-content {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+    </style>
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div class="min-h-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Advanced Code Generator</h1>
+                <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="dark:hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        <path class="hidden dark:block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <p class="text-gray-600 dark:text-gray-300 mb-8">Generate codes that follow the patterns identified in the blue, black, and red cap sample datasets.</p>
+            
+            <div class="tabs flex space-x-2 mb-8">
+                <div class="tab active px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700" onclick="switchTab('blue')">Blue Caps</div>
+                <div class="tab px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700" onclick="switchTab('black')">Black Caps</div>
+                <div class="tab px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700" onclick="switchTab('red')">Red Caps</div>
+                <div class="tab px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700" onclick="switchTab('about')">About</div>
+            </div>
+            
+            <div id="about-tab" class="tab-content about-section hidden rounded-lg bg-white dark:bg-gray-800 shadow-sm p-6 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">About This Tool</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">This tool analyzes and generates DataMatrix codes that follow the pattern observed in Schneider Optical Machines polishing caps. These caps are used in precision optical equipment and have a one-time use security mechanism via DataMatrix codes.</p>
+                
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Code Pattern Analysis</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">The analysis shows that the codes follow these patterns:</p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
+                    <li>All codes are exactly 26 characters long</li>
+                    <li>Codes use only lowercase letters (a-z) and numbers (0-9)</li>
+                    <li>Each color has specific prefix patterns:
+                        <ul class="list-disc list-inside ml-6 mt-2">
+                            <li>Black codes typically start with "7" or "v"</li>
+                            <li>Red codes typically start with "v", "7", or "64"</li>
+                            <li>Blue codes typically start with "7", "v", or "65"</li>
+                        </ul>
+                    </li>
+                    <li>The codes appear to have segments with different character patterns</li>
+                    <li>The last few characters may represent a checksum or validation code</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Disclaimer</h3>
+                <p class="text-gray-600 dark:text-gray-300">This tool is provided for educational and research purposes only. The generated codes are based on observed patterns and may not be accepted by the actual machines. Use at your own risk.</p>
+            </div>
+            
+            <div id="blue-tab" class="tab-content">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Random Codes</h3>
+                    <div class="space-x-4">
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(10)">Generate 10 Random Codes</button>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(100)">Generate 100 Random Codes</button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Sequential Codes</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Starting Counter</label>
+                                <input type="number" id="counter" value="1" min="1" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Count</label>
+                                <input type="number" id="count" value="10" min="1" max="1000" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prefix Type</label>
+                                <select id="prefixType" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="7">7 (50%)</option>
+                                    <option value="v">v (37.8%)</option>
+                                    <option value="6">6 (12.2%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateSequential()">Generate Sequential Codes</button>
+                    </div>
+                </div>
+                
+                <div id="results" class="space-y-2"></div>
+            </div>
+            
+            <div id="black-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Random Codes</h3>
+                    <div class="space-x-4">
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(10)">Generate 10 Random Codes</button>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(100)">Generate 100 Random Codes</button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Sequential Codes</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Starting Counter</label>
+                                <input type="number" id="counter" value="1" min="1" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Count</label>
+                                <input type="number" id="count" value="10" min="1" max="1000" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prefix Type</label>
+                                <select id="prefixType" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="7">7 (50%)</option>
+                                    <option value="v">v (37.8%)</option>
+                                    <option value="6">6 (12.2%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateSequential()">Generate Sequential Codes</button>
+                    </div>
+                </div>
+                
+                <div id="results" class="space-y-2"></div>
+            </div>
+            
+            <div id="red-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Random Codes</h3>
+                    <div class="space-x-4">
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(10)">Generate 10 Random Codes</button>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateRandom(100)">Generate 100 Random Codes</button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Sequential Codes</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Starting Counter</label>
+                                <input type="number" id="counter" value="1" min="1" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Count</label>
+                                <input type="number" id="count" value="10" min="1" max="1000" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prefix Type</label>
+                                <select id="prefixType" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="7">7 (50%)</option>
+                                    <option value="v">v (37.8%)</option>
+                                    <option value="6">6 (12.2%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="button px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" onclick="generateSequential()">Generate Sequential Codes</button>
+                    </div>
+                </div>
+                
+                <div id="results" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /**
+         * Unified DATAMATRIX Code Generator for Blue, Black & Red Caps
+         * 
+         * This generator creates codes that match the patterns identified in all three
+         * cap datasets, using the appropriate prefixes for each type.
+         */
+        class DataMatrixCodeGenerator {
+          constructor() {
+            // Character set (Base32-like encoding)
+            this.charset = "23456789abcdefghijkmnpqrstuvwxyz";
+            
+            // Mapping tables
+            this.charToValue = {};
+            this.valueToChar = {};
+            
+            for (let i = 0; i < this.charset.length; i++) {
+              this.charToValue[this.charset[i]] = i;
+              this.valueToChar[i] = this.charset[i];
+            }
+            
+            // Even digits for the last character (checksum)
+            this.evenDigits = ["2", "4", "6", "8"];
+            
+            // Common prefixes observed in all datasets
+            this.bluePrefixes = [
+              // Starting with 6
+              "65e", "65f", "65g", "65h", "688", "689", "683", "686", "687", 
+              "644", "646", "647", "648", "649",
+              // Starting with 7
+              "736", "737", "738", "739", "767", "768", "77f", "77g", "77h", 
+              "72c", "72f", "72g", "72h", "7pb", "7pc", "7pd", "7pg", "7z7",
+              "7m5", "7v8", "7ua", "7kf", "7hn", "7hr", "7ya", "7yb", "7yc", 
+              // Starting with v
+              "vxp", "vxq", "vxr", "viv", "viw", "vjm", "vjq", "vwx", "vww", 
+              "vn2", "vn6", "vn7", "vn8", "vn9", "vcw", "vcx", "vcz", "vdn"
+            ];
+            
+            this.blackPrefixes = [
+              // Starting with 6
+              "647", "649", "65e", "65g", "686", "689",
+              // Starting with 7
+              "736", "739", "767", "768", "77a", "77f", "77g",
+              "72c", "7c3", "7c8", "7c9", "7de", "7df", "7dg", "7dh", "7gw",
+              "7gx", "7gy", "7gz", "7hp", "7hr", "7kb", "7kc", "7kd", "7kf",
+              "7m5", "7n2", "7pa", "7pc", "7pd", "7ud", "7ua", "7uc", "7v4",
+              // Starting with v
+              "vcy", "vdn", "vdr", "vn6", "vn7", "vn8", "vn9", "vpe", "vpf", 
+              "vpg", "vph", "vs6", "vs7", "vtb", "vtg", "vww", "vwy", "vwz",
+              "vxp", "vxq", "vxr", "viw", "vjm", "vju", "vcu", "vcw"
+            ];
+            
+            this.redPrefixes = [
+              // Starting with 6
+              "646", "647", "649", "65e", "65h", "683", "687", "688",
+              // Starting with 7
+              "72e", "72f", "72g", "72h", "736", "737", "738", "739", "768", "77g", "77h",
+              "7c3", "7c6", "7c7", "7c9", "7de", "7dh", "7gx", "7gz", "7hm", "7hn", "7hp",
+              "7hq", "7hr", "7ka", "7kb", "7kc", "7kf", "7m5", "7n2", "7n5", "7pa", "7pb",
+              "7pg", "7ua", "7uc", "7ud", "7v3", "7v4", "7v5", "7v8", "7ya", "7yc", "7yd",
+              "7z2", "7z3", "7z4", "7z5",
+              // Starting with v
+              "v8n", "v8p", "v9w", "v9x", "v9y", "v9z", "vcx", "vcy", "vcz", "vdn", "vdq",
+              "vis", "viu", "vji", "vjj", "vjk", "vn6", "vn8", "vn9", "vpf", "vpg", "vph",
+              "vs6", "vs8", "vs9", "vtb", "vte", "vtf", "vtg", "vww", "vwx", "vwy", "vwz", "vxp"
+            ];
+            
+            // Combined prefixes with duplicates removed
+            this.combinedPrefixes = [...new Set([...this.bluePrefixes, ...this.blackPrefixes, ...this.redPrefixes])];
+            
+            // Current active prefixes
+            this.activePrefixes = this.bluePrefixes;
+            
+            // First character distribution
+            this.firstCharDist = {
+              "7": 50.0,
+              "v": 37.8,
+              "6": 12.2
+            };
+            
+            // Current cap type
+            this.capType = "blue";
+          }
+          
+          /**
+           * Set the active cap type (blue, black, red, or both)
+           */
+          setCapType(type) {
+            this.capType = type;
+            
+            switch(type) {
+              case "blue":
+                this.activePrefixes = this.bluePrefixes;
+                break;
+              case "black":
+                this.activePrefixes = this.blackPrefixes;
+                break;
+              case "red":
+                this.activePrefixes = this.redPrefixes;
+                break;
+              case "all":
+                this.activePrefixes = this.combinedPrefixes;
+                break;
+              default:
+                this.activePrefixes = this.bluePrefixes;
+            }
+          }
+          
+          /**
+           * Convert a value to its 5-bit binary representation
+           */
+          valueToBinary(value) {
+            return (value & 0x1F).toString(2).padStart(5, '0');
+          }
+          
+          /**
+           * Convert a binary string to its Base32 character
+           */
+          binaryToChar(binary) {
+            const value = parseInt(binary, 2);
+            return this.valueToChar[value] || this.valueToChar[0];
+          }
+          
+          /**
+           * Calculate checksum for a code (using the algorithm identified)
+           * Returns a value 0-3 which maps to even digits 2,4,6,8
+           */
+          calculateChecksum(code) {
+            // Based on analysis, using XOR of values modulo 4
+            const sum = code.split('').reduce((xor, char, index) => {
+              const value = this.charToValue[char] || 0;
+              return xor ^ value; // XOR operation
+            }, 0);
+            
+            // Take modulo 4 to get a value 0-3
+            return sum % 4;
+          }
+          
+          /**
+           * Map a checksum value (0-3) to an even digit (2,4,6,8)
+           */
+          checksumToEvenDigit(checksumValue) {
+            return this.evenDigits[checksumValue];
+          }
+          
+          /**
+           * Weighted choice from a distribution object
+           */
+          weightedChoice(choices) {
+            const entries = Object.entries(choices);
+            const total = entries.reduce((sum, [_, weight]) => sum + weight, 0);
+            const r = Math.random() * total;
+            
+            let cumulative = 0;
+            for (const [item, weight] of entries) {
+              cumulative += weight;
+              if (r <= cumulative) {
+                return item;
+              }
+            }
+            return entries[0][0]; // Fallback
+          }
+          
+          /**
+           * Generate a random code that follows the identified pattern
+           */
+          generateRandomCode() {
+            // Step 1: Choose a prefix (either from common list or generate new one)
+            let prefix;
+            if (Math.random() < 0.8) { // 80% chance to use common prefix
+              prefix = this.activePrefixes[Math.floor(Math.random() * this.activePrefixes.length)];
+            } else {
+              // Generate a new prefix with proper first character distribution
+              const firstChar = this.weightedChoice(this.firstCharDist);
+              const restLength = 2 + Math.floor(Math.random() * 2); // 2-3 more chars
+              let restChars = "";
+              for (let i = 0; i < restLength; i++) {
+                restChars += this.charset.charAt(Math.floor(Math.random() * this.charset.length));
+              }
+              prefix = firstChar + restChars;
+            }
+            
+            // Step 2: Generate the middle section
+            const middleLength = 25 - prefix.length;
+            let middleChars = "";
+            
+            for (let i = 0; i < middleLength; i++) {
+              // 75% letters, 25% digits based on observed pattern
+              if (Math.random() < 0.25) { // 25% chance for digit
+                middleChars += this.charset.charAt(Math.floor(Math.random() * 8)); // Digits only (first 8 chars)
+              } else {
+                middleChars += this.charset.charAt(8 + Math.floor(Math.random() * 24)); // Letters only (next 24 chars)
+              }
+            }
+            
+            // Step 3: Combine prefix and middle to form the data part
+            const dataSection = prefix + middleChars;
+            
+            // Step 4: Calculate the checksum
+            const checksumValue = this.calculateChecksum(dataSection);
+            const checksumDigit = this.checksumToEvenDigit(checksumValue);
+            
+            // Step 5: Return the complete code
+            return dataSection + checksumDigit;
+          }
+          
+          /**
+           * Generate a code with a specific counter value embedded
+           * This is useful for creating sequential codes
+           */
+          generateSequentialCode(counterValue, prefixType = "7") {
+            // Step 1: Choose a prefix based on the prefixType
+            const matchingPrefixes = this.activePrefixes.filter(p => p.startsWith(prefixType));
+            if (matchingPrefixes.length === 0) {
+              // Fallback if no matching prefixes
+              const firstChar = prefixType;
+              const restChars = this.charset.substring(0, 2);
+              return this.generateCodeWithPrefix(firstChar + restChars, counterValue);
+            }
+            
+            const prefix = matchingPrefixes[counterValue % matchingPrefixes.length];
+            return this.generateCodeWithPrefix(prefix, counterValue);
+          }
+          
+          /**
+           * Generate a code with a specific prefix and counter value
+           */
+          generateCodeWithPrefix(prefix, counterValue) {
+            // Step 1: Convert counter to binary (20 bits can hold values up to ~1 million)
+            const counterBinary = counterValue.toString(2).padStart(20, '0');
+            
+            // Step 2: Generate random bits for the remaining positions
+            const remainingBits = 25 * 5 - prefix.length * 5 - counterBinary.length;
+            let randomBits = "";
+            for (let i = 0; i < remainingBits; i++) {
+              randomBits += Math.floor(Math.random() * 2);
+            }
+            
+            // Step 3: Combine all binary data
+            const prefixBinary = prefix.split('').map(c => 
+              this.valueToBinary(this.charToValue[c] || 0)).join('');
+            
+            const dataBinary = prefixBinary + counterBinary + randomBits;
+            
+            // Step 4: Convert binary data back to characters (in 5-bit chunks)
+            let dataSection = "";
+            for (let i = 0; i < dataBinary.length; i += 5) {
+              const chunk = dataBinary.substr(i, 5);
+              const value = parseInt(chunk, 2);
+              dataSection += this.valueToChar[value];
+            }
+            
+            // Ensure we have exactly 25 characters (trim if needed)
+            dataSection = dataSection.substring(0, 25);
+            
+            // Step 5: Calculate the checksum
+            const checksumValue = this.calculateChecksum(dataSection);
+            const checksumDigit = this.checksumToEvenDigit(checksumValue);
+            
+            // Step 6: Return the complete code
+            return dataSection + checksumDigit;
+          }
+          
+          /**
+           * Generate a batch of random codes
+           */
+          generateRandomBatch(count) {
+            const codes = new Set();
+            while (codes.size < count) {
+              codes.add(this.generateRandomCode());
+            }
+            return Array.from(codes);
+          }
+          
+          /**
+           * Generate a batch of sequential codes
+           */
+          generateSequentialBatch(startCounter, count, prefixType = "7") {
+            const codes = [];
+            for (let i = 0; i < count; i++) {
+              codes.push(this.generateSequentialCode(startCounter + i, prefixType));
+            }
+            return codes;
+          }
+          
+          /**
+           * Determine the cap color based on the code prefix
+           */
+          determineCapColor(code) {
+            if (!code || code.length < 3) {
+              return "unknown";
+            }
+            
+            const prefix = code.substring(0, 3);
+            
+            // Check if prefix is unique to a specific cap color
+            const inBlue = this.bluePrefixes.includes(prefix);
+            const inBlack = this.blackPrefixes.includes(prefix);
+            const inRed = this.redPrefixes.includes(prefix);
+            
+            // Count how many cap types this prefix appears in
+            const capCount = (inBlue ? 1 : 0) + (inBlack ? 1 : 0) + (inRed ? 1 : 0);
+            
+            if (capCount === 0) {
+              // If prefix not found in any list, try to guess based on first character patterns
+              const firstChar = code.charAt(0);
+              if (firstChar === '6' || firstChar === '7' || firstChar === 'v') {
+                return "unknown (valid format)";
+              }
+              return "unknown";
+            } else if (capCount === 1) {
+              // Unique to one cap type
+              if (inBlue) return "blue";
+              if (inBlack) return "black";
+              if (inRed) return "red";
+            } else {
+              // Appears in multiple cap types
+              const types = [];
+              if (inBlue) types.push("blue");
+              if (inBlack) types.push("black");
+              if (inRed) types.push("red");
+              return types.join(" or ");
+            }
+            
+            return "unknown";
+          }
+          
+          /**
+           * Validate if a code follows the expected pattern
+           */
+          validateCode(code) {
+            if (!code || code.length !== 26) {
+              return { valid: false, reason: "Code must be 26 characters", capColor: "unknown" };
+            }
+            
+            // Check if all characters are in the allowed charset
+            for (let i = 0; i < code.length; i++) {
+              if (!this.charset.includes(code[i])) {
+                return { valid: false, reason: `Invalid character '${code[i]}' at position ${i}`, capColor: "unknown" };
+              }
+            }
+            
+            // Check if the first character is valid
+            const firstChar = code[0];
+            if (firstChar !== '6' && firstChar !== '7' && firstChar !== 'v') {
+              return { valid: false, reason: "First character must be '6', '7', or 'v'", capColor: "unknown" };
+            }
+            
+            // Check if last character is an even digit
+            const lastChar = code[code.length - 1];
+            if (!this.evenDigits.includes(lastChar)) {
+              return { valid: false, reason: "Last character must be an even digit (2,4,6,8)", capColor: "unknown" };
+            }
+            
+            // Check if checksum is correct
+            const dataSection = code.substring(0, 25);
+            const expectedChecksum = this.calculateChecksum(dataSection);
+            const expectedDigit = this.checksumToEvenDigit(expectedChecksum);
+            
+            if (lastChar !== expectedDigit) {
+              return { 
+                valid: false, 
+                reason: `Checksum is incorrect. Expected '${expectedDigit}', got '${lastChar}'`,
+                capColor: "unknown"
+              };
+            }
+            
+            // Determine cap color
+            const capColor = this.determineCapColor(code);
+            
+            return { valid: true, capColor: capColor };
+          }
+        }
+        
+        // Initialize the generator
+        const generator = new DataMatrixCodeGenerator();
+        let currentCapType = "blue";
+        
+        // Function to switch between cap types
+        function switchTab(type) {
+            currentCapType = type;
+            generator.setCapType(type);
+            
+            // Update UI
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Find the clicked tab and add active class
+            const tabs = document.querySelectorAll('.tab');
+            const tabIndex = Array.from(tabs).findIndex(tab => tab.textContent.toLowerCase().includes(type));
+            if (tabIndex !== -1) {
+                tabs[tabIndex].classList.add('active');
+            }
+            
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show the selected tab content
+            const selectedContent = document.getElementById(`${type}-tab`);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+            
+            // Clear results for the current tab
+            const resultsDiv = selectedContent.querySelector('#results');
+            if (resultsDiv) {
+                resultsDiv.innerHTML = '';
+            }
+        }
+        
+        // Function to generate random codes
+        function generateRandom(count) {
+            const codes = generator.generateRandomBatch(count);
+            displayResults(`Generated ${count} Random ${capitalize(currentCapType)} Cap Codes:`, codes);
+        }
+        
+        // Function to generate sequential codes
+        function generateSequential() {
+            const startCounter = parseInt(document.getElementById('counter').value) || 1;
+            const count = parseInt(document.getElementById('count').value) || 10;
+            const prefixType = document.getElementById('prefixType').value;
+            
+            const codes = generator.generateSequentialBatch(startCounter, count, prefixType);
+            displayResults(`Generated ${count} Sequential ${capitalize(currentCapType)} Cap Codes (starting at ${startCounter}):`, codes);
+        }
+        
+        // Function to validate a code
+        function validateCode() {
+            const code = document.getElementById('validateCode').value.trim();
+            const resultDiv = document.getElementById('validationResult');
+            
+            if (!code) {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter a code to validate</p>';
+                return;
+            }
+            
+            const result = generator.validateCode(code);
+            if (result.valid) {
+                const capColorDisplay = result.capColor !== "unknown" ? 
+                  `<span style="font-weight: bold; color: ${getCapColorStyle(result.capColor)}">
+                     ${capitalize(result.capColor)} Cap
+                   </span>` : 
+                  '<span style="color: orange;">Unknown Cap Type</span>';
+                
+                resultDiv.innerHTML = `<p style="color: green;">✓ Code is valid! Cap Type: ${capColorDisplay}</p>`;
+            } else {
+                resultDiv.innerHTML = `<p style="color: red;">✗ Invalid code: ${result.reason}</p>`;
+            }
+        }
+        
+        // Function to get color style for cap type
+        function getCapColorStyle(capColor) {
+            if (capColor.includes("blue")) return "blue";
+            if (capColor.includes("black")) return "#333";
+            if (capColor.includes("red")) return "red";
+            return "orange"; // unknown or multiple types
+        }
+        
+        // Function to display results
+        function displayResults(title, codes) {
+            const currentTab = document.getElementById(`${currentCapType}-tab`);
+            if (!currentTab) return;
+            
+            const resultsDiv = currentTab.querySelector('#results');
+            if (!resultsDiv) return;
+            
+            let html = `<h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">${title}</h3>`;
+            
+            codes.forEach((code, index) => {
+                const bgClass = currentCapType === 'blue' ? 'bg-blue-50 dark:bg-blue-900/20' : 
+                               currentCapType === 'black' ? 'bg-gray-50 dark:bg-gray-800' : 
+                               'bg-red-50 dark:bg-red-900/20';
+                html += `
+                    <div class="code ${bgClass} p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                        <span class="text-gray-600 dark:text-gray-300">${index + 1}.</span>
+                        <span class="font-mono text-gray-900 dark:text-white">${code}</span>
+                    </div>`;
+            });
+            
+            html += `
+                <button class="button mt-4 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700" 
+                        onclick="copyToClipboard('${codes.join('\\n')}')">
+                    Copy All to Clipboard
+                </button>`;
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Function to copy codes to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Codes copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback for browsers that don't support clipboard API
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Codes copied to clipboard!');
+            });
+        }
+        
+        // Helper function to capitalize first letter
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+    </script>
+</body>
+</html>
