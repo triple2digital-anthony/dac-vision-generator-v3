@@ -3,7 +3,7 @@ Authentication module for the DataMatrix Code Generator application.
 """
 
 import streamlit as st
-from ..utils.logger import AccessLogger
+from datamatrix_generator.utils.logger import AccessLogger
 
 def check_password():
     """
