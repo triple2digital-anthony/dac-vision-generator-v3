@@ -4,10 +4,10 @@ Main entry point for the DataMatrix Code Generator application.
 
 import streamlit as st
 import pandas as pd
-from datamatrix_generator.generator.datamatrix import DataMatrixCodeGenerator
-from datamatrix_generator.ui.auth import check_password
-from datamatrix_generator.ui.components import create_tab_ui, create_about_tab
-from datamatrix_generator.utils.logger import AccessLogger
+from generator.datamatrix import DataMatrixCodeGenerator
+from ui.auth import check_password
+from ui.components import create_tab_ui, create_about_tab
+from utils.logger import AccessLogger
 
 def create_admin_view():
     """Create the admin view for accessing logs."""
@@ -58,8 +58,7 @@ def main():
     )
     
     # Check if we're on the admin page
-    params = st.query_params
-    is_admin = "page" in params and params["page"] == "admin"
+    is_admin = "page" in st.query_params and st.query_params["page"] == "admin"
     
     # Handle admin page separately
     if is_admin:

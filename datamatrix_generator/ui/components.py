@@ -6,8 +6,8 @@ import streamlit as st
 import pandas as pd
 import time
 from typing import List, Dict, Any
-from datamatrix_generator.generator.datamatrix import DataMatrixCodeGenerator
-from datamatrix_generator.utils.helpers import format_results
+from ..generator.datamatrix import DataMatrixCodeGenerator
+from ..utils.helpers import format_results
 from datamatrix_generator.utils.logger import AccessLogger
 
 def create_tab_ui(cap_type: str) -> None:
