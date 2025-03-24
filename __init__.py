@@ -1,3 +1,0 @@
-"""
-DataMatrix Code Generator package.
-""" 
